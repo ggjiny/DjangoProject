@@ -4,4 +4,4 @@
 
 < 영화 추천 서비스 > 
 
-![클프](https://user-images.githubusercontent.com/71435571/170721252-1daf9364-1341-49dc-b780-6bfa25ac0dab.jpg)
+![클프](![image](https://user-images.githubusercontent.com/71435571/174452197-5f531d1a-1fe9-49e1-b71f-51e36edc7af7.png))
