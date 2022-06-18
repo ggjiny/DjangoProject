@@ -1,0 +1,80 @@
+{% extends 'movie/../../../movie/templates/movie/base.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+    <section id="portfolio" class="portfolio">
+      <div class="container">
+
+      <!-- Review Content Column -->
+      <div class="col-lg-8">
+
+        <!-- Title -->
+        <h1 class="mt-4" style="font-weight: bold">{{ review.title }}</h1>
+
+      {% if user.is_authenticated and user == review.author%}
+            <a class="btn btn-info float-right" href="/review/update_review/{{ review.pk }}" role="button"
+            style="background: darkseagreen; color: white; float: right; margin-top: -45px" >
+            <i class="fas fa-pen" ></i>Edit Review</a>
+        {% endif %}
+        <!-- Author -->
+        <p class="lead" >
+          <a>{{ review.author }}</a>
+        </p>
+
+        <!-- Review Content -->
+        <p>{{ review.get_content_markdown | safe }}</p>
+      {% if review.attached_file %}
+          <img src="{{ review.attached_file.url }}" height="300">
+      {% endif %}
+      <br/>
+        {% if review.tags.exists %}
+            <br/>
+            <i class = "fas fa-tags"></i>
+            {% for tag in review.tags.iterator %}
+            <a href={{ tag.get_absolute_url }}>#{{ tag }}</a>
+            {% endfor %}
+        {% endif %}
+       {% if review.category %}
+                <br/>
+                <br/>
+                <i class = "fas fa-tags"></i>
+                <a style="color:steelblue;" href={{ review.category.get_absolute_url }}>Category - {{ review.category }}</a>
+        {% endif %}
+
+      </div>
+      <!-- Date/Time -->
+        <p style="color: gray; margin-top: 15px">Wrote on {{ review.created_at }}</p>
+      {% if review.updated_at != review.created_at %}
+          <p style="color: gray; margin-top: -15px">Updated on {{ review.updated_at }}</p>
+      {% endif %}
+
+
+        <!-- Comments Form -->
+        <div class="card my-4">
+
+          <div class="card-body">
+            <form method="POST" action="{{ review.get_absolute_url }}addcomment/">
+                {% csrf_token %}
+              {{ comment_form | crispy }}
+              <button type="submit" class="btn btn-primary" style="background: darkseagreen; color: white; margin-top: 15px">Submit</button>
+            </form>
+          </div>
+        </div>
+
+        <!-- Single Comment -->
+      {% if review.comment_set.exists %}
+        {% for comment in review.comment_set.iterator %}
+        <div class="media mb-4">
+{#          <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt="">#}
+          <div class="media-body" id="comment-{{ comment.pk  }}">
+            <h5 class="mt-0">{{ comment.author }} ({{ comment.created_at }})</h5>
+            <p>{{ comment.content }}</p>
+          </div>
+        </div>
+          {% endfor %}
+      {% endif %}
+
+          <a href="/review" style="font-size: 20px">< Back</a>
+      </div>
+    </section>
+{% endblock %}

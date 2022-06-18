@@ -1,0 +1,17 @@
+{% extends 'movie/../../../movie/templates/movie/base.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+    <section id="portfolio" class="portfolio">
+      <div class="container">
+    <h2>Update Review</h2>
+
+    <form method="post" enctype="multipart/form-data">{% csrf_token %}
+    <table>
+        {{ form | crispy }}
+    </table>
+    <button type="submit" class="btn" style="background:darkseagreen; color:white;float:right; margin-top: 15px">Save</button>
+    </form>
+      </div>
+    </section>
+{% endblock %}

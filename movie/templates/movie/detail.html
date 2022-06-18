@@ -1,0 +1,49 @@
+{% extends 'movie/base.html' %}
+{% block content %}
+    {% load crispy_forms_tags %}
+{% load static %}
+<main id="main">
+
+  <!-- ======= Portfolio Details Section ======= -->
+  <section id="portfolio-details" class="portfolio-details">
+    <div class="container">
+      <div class="section-title" data-aos="fade-left">
+          <h2>Movie Details</h2>
+        </div>
+
+      <div class="portfolio-details-container" data-aos="fade-up" data-aos-delay="100">
+
+        <div class="owl-carousel portfolio-details-carousel">
+            {% if resdata.backdrop_path %}
+              <img src="https://image.tmdb.org/t/p/w500/{{resdata.backdrop_path}}" alt="">
+                {% else %}
+                    <img src="https://picsum.photos/seed/100/500/280" alt="">
+                {% endif %}
+        </div>
+
+        <div class="portfolio-info w-50" style="opacity: 95%">
+          <h3>Movie information</h3>
+          <ul>
+            <li><strong>Title</strong>: {{resdata.title}} ( {{resdata.original_title}} )</li>
+            <li><strong>Release Date</strong>: {{resdata.release_date}}</li>
+            <li><strong>Running Time</strong>: {{resdata.runtime}} </li>
+            <li><strong>Vote</strong>: {{resdata.vote_average}} / 10</li>
+          </ul>
+        </div>
+
+      </div>
+
+      <div class="portfolio-description">
+        <h2>Movie Overview</h2>
+        <p>
+            {{resdata.overview}}
+        </p>
+      </div>
+
+
+    <a href="/" style="font-size: 20px">< Back</a>
+    </div>
+  </section><!-- End Portfolio Details Section -->
+
+</main><!-- End #main -->
+{% endblock %}

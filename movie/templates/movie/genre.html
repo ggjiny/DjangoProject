@@ -1,0 +1,33 @@
+{% extends 'movie/base.html' %}
+{% block content %}
+  <main id="main">
+    <!-- ======= Portfolio Section ======= -->
+    <section id="portfolio" class="portfolio">
+      <div class="container">
+
+        <div class="section-title" data-aos="fade-left">
+          <h2>Genres</h2>
+        </div>
+
+        <div class="row portfolio-container" data-aos="fade-up" data-aos-delay="200">
+          {% for o in obj %}
+
+          <div class="col-lg-3 col-md-3 portfolio-item filter-app" >
+          <div class="portfolio-wrap"  style="background: darkseagreen; height: 100px;font-size: 17px; color: snow; font-weight: bold; text-align: center; padding-top: 35px">
+            {{ o.name }}
+              <div class="portfolio-info">
+               <div class="portfolio-links">
+                <a href="{% url 'detail_genre' genre_id=o.id genre=o.name %}" title="More Details" style="color: white"><i class="bx bx-link"></i></a>
+            </div>
+            </div>
+          </div>
+          </div>
+
+          {% endfor %}
+
+        </div>
+
+      </div>
+    </section><!-- End Portfolio Section -->
+  </main>
+{% endblock %}

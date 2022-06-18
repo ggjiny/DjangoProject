@@ -2,7 +2,7 @@ from django.shortcuts import render
 import requests
 import json
 
-from movie.forms import SearchForm
+from .forms import SearchForm
 
 my_id = '53d4fa0a5436efd4f6755367e50b9b8f'
 
@@ -16,7 +16,7 @@ def home(request):
             resdata = response.text
             obj = json.loads(resdata)
             obj = obj['results']
-            return render(request, 'search.html', {'obj':obj})
+            return render(request, 'movie/search.html', {'obj':obj, 'word':searchword})
     else:
         form = SearchForm()
         url = 'https://api.themoviedb.org/3/trending/movie/week?api_key='+my_id
@@ -24,19 +24,30 @@ def home(request):
         resdata = response.text
         obj = json.loads(resdata)
         obj = obj['results']
-    return render(request, 'index.html', {'obj':obj, 'form':form})
+    return render(request, 'movie/index.html', {'obj':obj, 'form':form})
 
 def detail(request, movie_id):
-
     url = 'https://api.themoviedb.org/3/movie/' + movie_id +'?api_key='+my_id
     response = requests.get(url)
     resdata = response.text
     resdata = json.loads(resdata)
-    return render(request, 'detail.html', {"resdata":resdata})
+    return render(request, 'movie/detail.html', {"resdata":resdata})
 
-def genre(request, movie_id):
+def genre(request):
     url = 'https://api.themoviedb.org/3/genre/movie/list?api_key='+my_id+'&language=ko-KR'
     response = requests.get(url)
     resdata = response.text
-    resdata = json.loads(resdata)
-    return render(request, 'detail.html', {"resdata": resdata})
+    obj = json.loads(resdata)
+    obj = obj['genres']
+    return render(request, 'movie/genre.html', {"obj": obj})
+
+def detail_genre(request, genre_id, genre):
+    url = 'https://api.themoviedb.org/3/discover/movie?api_key=' + my_id + '&with_genres=' + genre_id
+    response = requests.get(url)
+    resdata = response.text
+    obj2= json.loads(resdata)
+    obj = obj2['results']
+    return render(request, 'movie/genre_detail.html', {'obj': obj, 'genre':genre})
+
+def about(request):
+    return render(request, 'movie/about.html')
