@@ -1,6 +1,6 @@
 # DjangoProject
 
-- django, PasS-Ta
+- Django, KT PaaS-Ta
 
 < 영화 추천 서비스 > 
 
